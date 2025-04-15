@@ -5,6 +5,6 @@ from django.db import models
 class CustomUser(AbstractUser):
     ROLE_CHOICES = (
         ('manager', 'Manager'),
-        ('customer', 'Customer'),
+        ('assistant', 'Assistant'),
     )
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='customer')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='assistant')
