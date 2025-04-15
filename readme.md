@@ -1,4 +1,4 @@
-# E-commerce Online Platform
+# MIL Inventory Management System
 > A platform for both finding products for customers and managing products for managers
 
 venv is only for development and wont go to the docker container

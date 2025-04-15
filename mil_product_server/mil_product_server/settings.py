@@ -25,12 +25,13 @@ SECRET_KEY = get_env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "host.docker.internal"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'user',
-    'inventory_management_system'
+    'inventory_management_system',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +72,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mil_product_server.wsgi.application'
-
+ASGI_APPLICATION = 'mil_product_server.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -82,7 +83,7 @@ DATABASES = {
         'NAME': get_env('PG_DB'),
         'USER': get_env('PG_USER'),
         'PASSWORD': get_env('PG_PASS'),
-        'HOST': get_env('DEV_HOST'),
+        'HOST': get_env('PRODUCTION_HOST'),
         'PORT': get_env('PG_PORT'),
     }
 }

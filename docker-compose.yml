@@ -9,9 +9,14 @@ services:
       POSTGRES_PASSWORD: ${PG_PASS}
     volumes:
       - pgdata:/var/local/postgresql/data
-      - ./initdb:/docker-entrypoint-initdb.d/ # this is for initializing the database beforehand
+      # - ./initdb:/docker-entrypoint-initdb.d/ # this is for initializing the database beforehand
     ports:
       - ${PG_PORT}:${PG_PORT}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${PG_USER}"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
   pgadmin:
     image: dpage/pgadmin4
     env_file: .env
@@ -23,7 +28,16 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
   
-
+  app:
+    build: .
+    env_file: .env
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      pg:
+        condition: service_healthy
 volumes:
   pgdata:
   pgadmin-data:
