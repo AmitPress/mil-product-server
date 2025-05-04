@@ -31,6 +31,7 @@ services:
   app:
     build: .
     env_file: .env
+    command: /bin/sh -c "python manage.py makemigrations && python manage.py migrate && daphne -p 3000 -b 0.0.0.0 mil_product_server.asgi:application"
     ports:
       - ${APP_PORT}:${APP_PORT}
     extra_hosts:
